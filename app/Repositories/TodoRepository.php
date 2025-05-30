@@ -3,81 +3,19 @@
 namespace App\Repositories;
 
 use App\Models\Todo;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
-class TodoRepository
+interface TodoRepository
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct() {}
+    function getAll(): Collection|null;
 
-    function getAll(): Collection|null
-    {
-        $todoList = Todo::all();
+    function findById($index): Todo|null;
 
-        if ($todoList->isEmpty()) {
-            return null;
-        }
+    function add($data): Todo|null;
 
-        return $todoList;
-    }
+    function edit($index, $data): Todo|null;
 
-    function getOne($index): Todo|null
-    {
-        $todo = Todo::find($index);
+    function delete($index): bool;
 
-        if ($todo == null) {
-            return null;
-        }
-
-        return $todo;
-    }
-
-    function add($data): Todo|null
-    {
-        try {
-            $todo = Todo::create([
-                'name' => $data['name']
-            ]);
-        } catch (Exception $e) {
-            return null;
-        }
-
-        return $todo;
-    }
-
-    function edit($index, $data): Todo|null
-    {
-        $todo = Todo::find($index);
-
-        if ($this->isNull($todo)) {
-            return null;
-        }
-
-        $todo->name = $data['name'];
-
-        if (!$todo->save()) {
-            return null;
-        }
-
-        return $todo;
-    }
-
-    function delete($index): bool
-    {
-        $status = Todo::destroy($index);
-
-        if ($status < 1) {
-            return false;
-        }
-
-        return true;
-    }
-
-    function isNull($data): bool
-    {
-        return $data == null;
-    }
+    function isNull($data): bool;
 }

@@ -39,7 +39,7 @@ test('add data todo fail', function () {
     expect($respon)->toBe(null);
 });
 
-test('get one todo success', function () {
+test('get todo by id success', function () {
 
     $dataTest = [
         'name' => 'todo1'
@@ -47,12 +47,12 @@ test('get one todo success', function () {
 
     $responAdd = $this->todoRepository->add($dataTest);
 
-    $responGetOne = $this->todoRepository->getOne($responAdd->id);
+    $responGetOne = $this->todoRepository->findById($responAdd->id);
 
     expect($responAdd->toArray())->toEqual($responGetOne->toArray());
 });
 
-test('get one todo fail', function () {
+test('get todo by id fail', function () {
 
     $dataTest = [
         'name' => 'todo1'
@@ -60,7 +60,7 @@ test('get one todo fail', function () {
 
     $resultAdd = $this->todoRepository->add($dataTest);
 
-    $resultGetOne = $this->todoRepository->getOne($resultAdd->id + 2);
+    $resultGetOne = $this->todoRepository->findById($resultAdd->id + 2);
 
     expect($resultGetOne)->toBe(null);
     expect($resultGetOne)->not->toEqual($resultAdd->toArray());

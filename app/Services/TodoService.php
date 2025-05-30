@@ -2,13 +2,15 @@
 
 namespace App\Services;
 
-class TodoService
+interface TodoService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    function showAll();
+
+    function showDetail($id);
+
+    function add(array $data);
+
+    function edit($id, array $data);
+
+    function delete($id);
 }
