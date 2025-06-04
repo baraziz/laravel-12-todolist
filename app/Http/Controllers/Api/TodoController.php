@@ -48,10 +48,10 @@ class TodoController extends Controller
             throw new DataNotFound("todo not found");
         }
 
-        return new TodoResource($data);
+        // return new TodoResource($data);
         return response([
             "status" => "success",
-            "message" => "data ditemukan",
+            "message" => "data found",
             "data" => new TodoResource($data)
         ]);
     }
